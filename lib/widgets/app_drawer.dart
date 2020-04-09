@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/orders_screen.dart';
+import '../screens/user_product_screen.dart';
 
 class Appdrawer extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class Appdrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Hell Friends'),
+            title: Text('Hello Friends'),
             automaticallyImplyLeading:
                 false, // this will not add the back button
           ),
@@ -28,6 +29,16 @@ class Appdrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushNamed(
                 OrdersScreen.routeName,
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Manage Products'),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                UserProductScreen.routeName,
               );
             },
           ),
