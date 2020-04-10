@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import './product.dart';
 
@@ -67,17 +69,41 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      description: product.description,
-      title: product.title,
-      price: product.price,
-      imageUrl: product.imageUrl,
+  Future<void> addProduct(Product product) {
+    const url = 'https://flutter-shop-app-5754f.firebaseio.com/products.json';
+    return http
+        .post(
+      url,
+      body: json.encode(
+        {
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavourite': product.isFavourite,
+        },
+      ),
+    )
+        .then(
+      (response) {
+        print(json.decode(response.body));
+        final newProduct = Product(
+          id: json.decode(response.body)['name'],
+          description: product.description,
+          title: product.title,
+          price: product.price,
+          imageUrl: product.imageUrl,
+        );
+        _items.add(newProduct);
+        // _items.insert(0, newProduct); // add at the start of the list
+        notifyListeners();
+      },
+    ).catchError(
+      (error) {
+        print('$error, error occured');
+        throw error;
+      },
     );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct); // add at the start of the list
-    notifyListeners();
   }
 
   void updateProduct(String id, Product newProduct) {
@@ -95,3 +121,5 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 }
+
+// https://en.m.wikipedia.org/wiki/ThinkPad_T_series#/media/File%3AThinkPad_T20.jpg
