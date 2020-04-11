@@ -32,7 +32,7 @@ class Product with ChangeNotifier {
     isFavourite = !isFavourite;
     notifyListeners();
     final url =
-        'https://flutter-shop-app-5754f.firebaseio.com/products/$id,json';
+        'https://flutter-shop-app-5754f.firebaseio.com/products/$id.json';
     // this is also potismitic update, here we first store the current state in a variable and change the favourite locally  and then call the api, if api call fails then we roll back the favourite the previous state
     try {
       final response = await http.patch(url,
