@@ -27,18 +27,18 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  void toogleFavouriteStatus() async {
+  void toogleFavouriteStatus(String token, String userId) async {
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
     final url =
-        'https://flutter-shop-app-5754f.firebaseio.com/products/$id.json';
+        'https://flutter-shop-app-5754f.firebaseio.com/userFavourite/$userId/$id.json?auth=$token';
     // this is also potismitic update, here we first store the current state in a variable and change the favourite locally  and then call the api, if api call fails then we roll back the favourite the previous state
     try {
-      final response = await http.patch(url,
-          body: json.encode({
-            'isFavourite': isFavourite,
-          }));
+      final response = await http.put(url,
+          body: json.encode(
+            isFavourite,
+          ));
       if (response.statusCode >= 400) {
         _setFavValue(oldStatus);
       }
