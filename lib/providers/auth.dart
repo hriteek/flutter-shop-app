@@ -13,6 +13,7 @@ class Auth with ChangeNotifier {
   Timer _authTimer;
 
   bool get isAuth {
+    print('${token != null}, $_expiryDate');
     return token != null;
   }
 
@@ -97,7 +98,7 @@ class Auth with ChangeNotifier {
       return false;
     }
     final extractedUserData =
-        json.encode(pref.getString('userData')) as Map<String, Object>;
+        json.decode(pref.getString('userData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
     if (expiryDate.isBefore(DateTime.now())) {
       return false;
