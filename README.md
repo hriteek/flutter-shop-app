@@ -1,6 +1,6 @@
 # shop_app
 
-A new Flutter project.
+A new Flutter project. **_Developing new skill during quarantine_**. I have followed [this tutorial](https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/) to complete this app.
 
 ## Getting Started
 
